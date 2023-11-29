@@ -8,9 +8,11 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.lang.model.util.Elements;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/personne")
 public class PersonneController {
     @Autowired
@@ -30,7 +32,7 @@ public  void addPersonne(@RequestBody PersonneDto personneDto){
 
         iPersonneService.deletePersonne(id);
  }
- @PostMapping("/update/{id}")
+ @PutMapping("/update/{id}")
  public ResponseEntity<?> updatePersonne(@PathVariable Long id, @RequestBody PersonneDto personneDto){
    PersonneDto pers3 = new PersonneDto(id,personneDto.nom(), personneDto.prenom(), personneDto.profession(),personneDto.adresse(),personneDto.email(), personneDto.tel());
    PersonneDto pers4= iPersonneService.updatePersonne(pers3);

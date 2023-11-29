@@ -14,9 +14,9 @@ import java.util.List;
 public class MedicamentController {
    @Autowired
     private IMedicamentService iMedicamentService;
-
     @GetMapping("/all")
     public List<MedicamentDto> getAllMedicament(){
+
         return iMedicamentService.getAllMedicament();
     }
 
@@ -24,15 +24,18 @@ public class MedicamentController {
     public void addMedicament(@RequestBody MedicamentDto medicamentDto){
         iMedicamentService.saveMedicament(medicamentDto);
     }
-    @DeleteMapping("/delete/{id}")
-    public  void deleteMedicament(@PathVariable Long id){
-        iMedicamentService.deleteMedicament(id);
-    }
+
     @PutMapping("/update/{id}")
     public ResponseEntity<?> updateMedicament(@PathVariable Long id,@RequestBody MedicamentDto medicamentDto){
-       MedicamentDto var1 = new MedicamentDto(medicamentDto.id(), medicamentDto.designation(), medicamentDto.prix(), medicamentDto.quantite(), medicamentDto.date_debut(),medicamentDto.date_fin());
+       MedicamentDto var1 = new MedicamentDto(id,  medicamentDto.date_debut(),medicamentDto.date_fin(),medicamentDto.designation(), medicamentDto.prix(), medicamentDto.quantite());
        MedicamentDto var2 = iMedicamentService.updateMedicament(var1);
        return new ResponseEntity<>(var2, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public  void deleteMedicament(@PathVariable Long id){
+
+        iMedicamentService.deleteMedicament(id);
     }
 
 }
